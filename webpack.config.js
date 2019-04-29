@@ -1,4 +1,5 @@
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const resolve = file => path.join(__dirname, file)
 
 module.exports = {
@@ -7,7 +8,7 @@ module.exports = {
   output: {
     path: resolve('dist'),
     filename: "analyzer.js",
-    library: 'Analyzer',
+    // library: 'analyzer',
     libraryTarget: 'umd',
     globalObject: 'typeof self !== \'undefined\' ? self : this'
   },
@@ -20,5 +21,8 @@ module.exports = {
         loader: 'babel-loader'
       }
     ]
-  }
+  },
+  plugins: [
+    new CleanWebpackPlugin()
+  ]
 };

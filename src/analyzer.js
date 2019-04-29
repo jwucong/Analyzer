@@ -1,37 +1,34 @@
-const hasOwnProperty = require("./util").hasOwnProperty
-console.log(hasOwnProperty)
+export const Analyzer = (function () {
+  const queue = [];
+  let instance = null;
+  return class {
+    constructor() {
+      this.name = 'tesla';
+      this.version = '1.0.0';
+      loadScript(() => {
+        const props = Object.keys(this)
+        console.log('props: ', props)
+      })
+      return instance || (instance = this);
+    }
 
-class Analyzer {
-  constructor(options) {
-    const createReadOnlyProperty = value => ({
-      value,
-      writable: false,
-      enumerable: true,
-      configurable: true
-    });
-    Object.defineProperties(this, {
-      name: createReadOnlyProperty('Analyzer'),
-      version: createReadOnlyProperty('1.0.0')
-    });
+    send(commad, data) {
+      queue.push(arguments);
+      console.log('send: ', arguments)
+    }
   }
+})();
 
-  init() {
-    const that = this;
-    const script = document.createElement('script');
-    script.onload = function () {
-      console.log(that.name);
-    };
-  }
 
-  send() {
-    const that = this;
-  }
-
+function loadScript(success, error) {
+  const js = document.createElement('script');
+  document.body.appendChild(js);
+  js.type = 'text/javascript';
+  js.onload = success;
+  js.onerror = error;
+  js.src = 'https://cdn.bootcss.com/jquery/1.12.4/jquery.js';
 }
 
-const a = new Analyzer({});
-console.log(a.name)
-console.log(a.name = 123)
-console.log(a.name)
-console.log(a.version = 2.0)
-console.log(a.version)
+
+
+
