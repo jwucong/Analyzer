@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Title</title>
+  <style>
+    html {
+      font: 14px/1.2 "Microsoft YaHei";
+    }
+
+    body {
+      background: #f7f7f7;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input {
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      height: 40px;
+      padding: 0 10px;
+      background: transparent;
+      border-radius: 6px;
+      border: 1px solid #999;
+      font-size: inherit;
+      outline: 0;
+    }
+
+    .box {
+      width: 90%;
+      margin: 0 auto 30px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+    }
+    .flex {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    li {
+      word-break: break-word;
+    }
+    #clear {
+      width: 100px;
+      height: 40px;
+      margin-left: 10px;
+      line-height: 40px;
+      border-radius: 6px;
+      background: green;
+      color: #fff;
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<h1>Util Test</h1>
+
+<div class="box flex">
+  <input type="text" placeholder="URL" id="url">
+  <div id="clear">清空</div>
+</div>
+<div class="box" id="p"></div>
+<script src="util.js"></script>
+<script>
+
+  function find(s) {
+    if (/^#/.test(s)) {
+      return document.getElementById(s.replace('#', ''))
+    }
+    return document.querySelector(s)
+  }
+
+  const url = find('#url')
+
+  console.log('1603031798610896187')
+  console.log(Number('1603031798610896187'))
+  console.log(Number.MAX_VALUE)
+  console.log(Number.MAX_VALUE.toString().length)
+
+
+  url.addEventListener('keyup', function (e) {
+    if (e.keyCode === 13) {
+      // const u = parseUrl(this.value, false)
+      // // const q = getUrlQuery(this.value, false)
+      // console.log('u: ', u)
+      // // console.log('q: ', q)
+      // find('#p').innerHTML = getHtml(u)
+      const b = toBytes(this.value)
+      console.log('bytes: ', b)
+      find('#p').innerHTML = b && b + ' Byte'
+    }
+  }, false)
+
+  find('#clear').addEventListener('click', function() {
+      if(url.value) {
+        url.value = '';
+      }
+    url.focus();
+  }, false)
+
+  function getHtml(obj) {
+      let html = ''
+      for (let k in obj) {
+        if (obj.hasOwnProperty(k)) {
+          const val = obj[k];
+          html += `<li><b>${k}: </b><span>${is(val, 'object') ? getHtml(val) : val}</span></li>`;
+        }
+      }
+    return `<ul>${html}</ul>`;
+  }
+
+
+</script>
+</body>
+</html>
